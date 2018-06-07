@@ -9,7 +9,7 @@ Created by:
 	Oscar Leung
 
 Credits:
-	Original Tyrian game for sprites
+	Tyrian game for sprites
 	Jojo's Bizarre Adventure for music and voices
 	Youtube for laser gun sound
 	
