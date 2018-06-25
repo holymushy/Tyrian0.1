@@ -123,7 +123,7 @@ public class JavaTemplate {
 
 		String levelName = "menu";
 		
-		ProjectileHandler handler= new ProjectileHandler();
+		//ProjectileHandler handler= new ProjectileHandler();
 
 		// The game loop
 		while (!shouldExit) {
@@ -196,8 +196,8 @@ public class JavaTemplate {
 					ee.draw(camera, gl, deltaTimeMS);
 				}
 				p.draw(camera, gl, deltaTimeMS);
-				playerProjectiles = handler.drawProjectiles(playerProjectiles, camera, gl, deltaTimeMS, 0);
-				enemyProjectiles = handler.drawProjectiles(enemyProjectiles, camera, gl, deltaTimeMS, 0);
+				ProjectileHandler.drawProjectiles(playerProjectiles, camera, gl, deltaTimeMS, 0);
+				ProjectileHandler.drawProjectiles(enemyProjectiles, camera, gl, deltaTimeMS, 0);
 				if(boss != null){
 					boss.draw(camera, gl, deltaTimeMS);
 				}
@@ -239,8 +239,8 @@ public class JavaTemplate {
 						ee.draw(camera, gl, deltaTimeMS);
 					}
 					p.draw(camera, gl, deltaTimeMS);
-					playerProjectiles = handler.drawProjectiles(playerProjectiles, camera, gl, deltaTimeMS, 0);
-					enemyProjectiles = handler.drawProjectiles(enemyProjectiles, camera, gl, deltaTimeMS, 0);
+					ProjectileHandler.drawProjectiles(playerProjectiles, camera, gl, deltaTimeMS, 0);
+					ProjectileHandler.drawProjectiles(enemyProjectiles, camera, gl, deltaTimeMS, 0);
 					if(boss != null){
 						boss.draw(camera, gl, deltaTimeMS);
 					}
@@ -261,18 +261,10 @@ public class JavaTemplate {
 							pro.move();
 						}
 						
-						handler.projectileVsPlayer(enemyProjectiles, p);
-						p = handler.getNewPlayer();
-						enemyProjectiles = handler.getNewPList();
-						
-						handler.projectileVsEnemy(playerProjectiles, enemies);
-						playerProjectiles = handler.getNewPList();
-						enemies = handler.getNewEList();
-						
+						ProjectileHandler.projectileVsPlayer(enemyProjectiles, p);
+						ProjectileHandler.projectileVsEnemy(playerProjectiles, enemies,p);
 						if(boss!= null){
-							handler.projectileVsBoss(playerProjectiles, boss);
-							playerProjectiles = handler.getNewPList();
-							boss = handler.getNewBoss();
+							ProjectileHandler.projectileVsBoss(playerProjectiles, boss);
 							if(boss.getHP() <= 0){ bossDead = true; p.addToEnemiesKilled(10);}
 						}
 						lastPhysicsFrameMs += physicsDeltaMs;
@@ -347,8 +339,8 @@ public class JavaTemplate {
 						}
 					}
 					p.update(gl, deltaTimeMS, camera);
-					playerProjectiles = handler.drawProjectiles(playerProjectiles, camera, gl, deltaTimeMS, cameraScrollSpeed);
-					enemyProjectiles = handler.drawProjectiles(enemyProjectiles, camera, gl, deltaTimeMS, cameraScrollSpeed);
+					ProjectileHandler.drawProjectiles(playerProjectiles, camera, gl, deltaTimeMS, cameraScrollSpeed);
+					ProjectileHandler.drawProjectiles(enemyProjectiles, camera, gl, deltaTimeMS, cameraScrollSpeed);
 					if(boss != null){
 						boss.updateAI(numFrames, deltaTimeMS, enemyProjectiles, 
 								new AnimationData[] {a.getProjectileAni("enemy"), a.getProjectileAni("boss2"),
