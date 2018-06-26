@@ -15,7 +15,7 @@ public class Player extends DamagableDrawableAABB implements Serializable{
 		timeUntilHurt = INVULN_TIME;
 		enemiesKilled =0;
 	}
-	public void update(GL2 gl, long deltaTimeMS, AABB camera){
+	public void update(GL2 gl, long deltaTimeMS, Camera camera){
 		if(timeUntilShoot>0) timeUntilShoot -= deltaTimeMS;
 		if(timeUntilHurt >0) timeUntilHurt -= deltaTimeMS;
 		this.draw(camera, gl, deltaTimeMS);
@@ -37,7 +37,7 @@ public class Player extends DamagableDrawableAABB implements Serializable{
 		}
 		return p;
 	}
-	public void moveAndCheck(int xDelta, int yDelta, int numFrames, AABB camera){
+	public void moveAndCheck(int xDelta, int yDelta, int numFrames, Camera camera){
 		this.addToX((int) (xDelta * numFrames));
 		this.addToY((int) (yDelta * numFrames));
 		this.checkCamera(camera);

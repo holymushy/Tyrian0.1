@@ -5,11 +5,9 @@ import java.util.Map;
 import com.jogamp.opengl.GL2;
 
 public class LevelLoader {
-	private Level level1;
-	public LevelLoader(GL2 gl){
-		BackgroundLoader bgLoader = new BackgroundLoader(gl);
-		BackgroundDef bgDef = bgLoader.getBG();
-		AABB camera = new AABB(0, bgDef.getH() * bgDef.getTileHeight() - 600, 800, 600);
+	public static Level loadLevel1(GL2 gl){
+		BackgroundDef bgDef = BackgroundLoader.loadLevel1BG(gl);
+		Camera camera = new Camera(0, bgDef.getH() * bgDef.getTileHeight() - 600, 800, 600);
 		AnimationLoader a = new AnimationLoader(gl);
 		Player p = new Player(100, camera.getY() + 400, a.getPlayerAni("middle").getCurrentImageSize()[0],
 				a.getPlayerAni("middle").getCurrentImageSize()[1], a.getPlayerAni("middle"), 100);
@@ -18,15 +16,11 @@ public class LevelLoader {
 		
 		ArrayList<spawner> s = new ArrayList<spawner>();
 		s.add(new spawner(89, "carrot", 7));
-		//s.add(new spawner(85, "carrot", 7));
 		s.add(new spawner(81, "gencore", 2));
 		s.add(new spawner(73, "carrot", 5));
-		//s.add(new spawner(65, "carrot", 7));
 		s.add(new spawner(61, "gencore", 2));
-		//s.add(new spawner(57, "carrot", 3));
 		s.add(new spawner(49, "carrot", 5));
 		s.add(new spawner(40, "gencore", 2));
-		//s.add(new spawner(37, "carrot", 5));
 		s.add(new spawner(29, "gencore", 3));
 		s.add(new spawner(20, "carrot", 5));
 		
@@ -40,6 +34,7 @@ public class LevelLoader {
 							ss.getY() * bgDef.getTileHeight() - 10, aa.getCurrentImageSize()[0],
 							aa.getCurrentImageSize()[1],aa,10,-3));
 
+					//move in from the left
 					ee.add(new SideSweeper(0 - ((aa.getCurrentImageSize()[0] + 100) * i), 
 							ss.getY() * bgDef.getTileHeight() - 100, aa.getCurrentImageSize()[0],
 							aa.getCurrentImageSize()[1],aa,10,3));
@@ -63,14 +58,7 @@ public class LevelLoader {
 				bossAni.getCurrentImageSize()[0], bossAni.getCurrentImageSize()[1], 
 				new AnimationData[] {bossAni, a.getEnemyAni("bossG"),  a.getEnemyAni("bossA")}, 3000);
 		
-		level1 = new Level(bgDef, p, camera, points, "level 1", b);
-	}
-	public Level getLevel(String s){
-		Level temp = null;
-		switch(s){
-		case "Level 1": temp = level1; break;
-		}
-		return temp;
+		return new Level(bgDef, p, camera, points, "level 1", b);
 	}
 }
 

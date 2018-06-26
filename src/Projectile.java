@@ -65,7 +65,7 @@ class ProjectileHandler{
 		}
 	}
 	
-	public static void drawProjectiles(ArrayList<Projectile> projectiles, AABB camera, GL2 gl, long deltaTimeMS, int cameraScrollSpeed){
+	public static void drawProjectiles(ArrayList<Projectile> projectiles, Camera camera, GL2 gl, long deltaTimeMS, int cameraScrollSpeed){
 		if (camera.getY() == 0) cameraScrollSpeed = 0;
 		for (int i = 0; i < projectiles.size(); i++) {
 			Projectile pro = projectiles.get(i);

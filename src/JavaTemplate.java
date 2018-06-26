@@ -96,10 +96,9 @@ public class JavaTemplate {
 		font.put(":", colon);
 		
 		
-		LevelLoader loader = new LevelLoader(gl);
-		curLevel = loader.getLevel("Level 1");
+		curLevel = LevelLoader.loadLevel1(gl);
 		BackgroundDef bgDef = curLevel.getBG();
-		AABB camera = curLevel.getCamera();
+		Camera camera = curLevel.getCamera();
 		Clip curClip = SoundLoader.OVERDRIVE.playSoundLoop(); //background sound
 		curClip.stop();
 		long clipReset = 59000000;

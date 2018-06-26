@@ -25,7 +25,7 @@ public class BackgroundDef implements Serializable {
 	public int getTileHeight(){
 		return tiles[0].getH();
 	}
-	public void draw(AABB camera, GL2 gl){
+	public void draw(Camera camera, GL2 gl){
 		int BGWidth = this.getTileWidth();
 		int BGHeight = this.getTileHeight();
 		
