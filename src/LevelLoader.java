@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import com.jogamp.opengl.GL2;
@@ -52,6 +53,7 @@ public class LevelLoader {
 			}
 		}
 		
+		Collections.sort(points);
 		
 		AnimationData bossAni = a.getEnemyAni("bossN");
 		Boss b = new Boss(camera.getW()/2 - bossAni.getCurrentImageSize()[0]/2, -bossAni.getCurrentImageSize()[1], 
@@ -81,7 +83,7 @@ class spawner{
 	}
 }
 
-class SpawnPoint implements Serializable{
+class SpawnPoint implements Serializable, Comparable<SpawnPoint>{
 	private int y;
 	private ArrayList<Enemy> eList;
 	public SpawnPoint(int y, ArrayList<Enemy> eList){
@@ -93,5 +95,10 @@ class SpawnPoint implements Serializable{
 	}
 	public ArrayList<Enemy> getEnemies(){
 		return this.eList;
+	}
+	public int compareTo(SpawnPoint other) {
+		if(this.getPoint() > other.getPoint() ) return -1;
+		else if(this.getPoint() < other.getPoint()) return 1;
+		else return 0;
 	}
 }

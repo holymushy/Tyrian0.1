@@ -281,11 +281,10 @@ public class JavaTemplate {
 						SoundLoader.HAIL2U.playSound();
 					}
 					
-					for(int i =0; i<spawns.size(); i++){
-						if(camera.getY() <= spawns.get(i).getPoint() ){
-							enemies.addAll(spawns.get(i).getEnemies());
-							spawns.remove(i);
-							i--;
+					if(spawns.size() > 0) {
+						if(camera.getY() <= spawns.get(0).getPoint()) {
+							enemies.addAll(spawns.get(0).getEnemies());
+							spawns.remove(0);
 						}
 					}
 					
