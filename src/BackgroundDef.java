@@ -38,9 +38,8 @@ public class BackgroundDef implements Serializable {
 		for(int i =upperIndexX; i<=lowerIndexX; i++){
 			for(int j = upperIndexY; j <= lowerIndexY; j++){
 				BGTile temp = this.getTile(i, j);
-				AABB tileAABB = new AABB(i * BGWidth, j * BGHeight, BGWidth, BGHeight);
-				JavaTemplate.glDrawSprite(gl, temp.getTexture(), tileAABB.getX() - camera.getX(), 
-						tileAABB.getY() - camera.getY(), BGWidth, BGHeight);
+				JavaTemplate.glDrawSprite(gl, temp.getTexture(), (i * BGWidth) - camera.getX(), 
+						(j * BGHeight) - camera.getY(), BGWidth, BGHeight);
 			}
 		}
 	}

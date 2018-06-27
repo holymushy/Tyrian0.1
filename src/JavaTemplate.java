@@ -264,7 +264,7 @@ public class JavaTemplate {
 						ProjectileHandler.projectileVsEnemy(playerProjectiles, enemies,p);
 						if(boss!= null){
 							ProjectileHandler.projectileVsBoss(playerProjectiles, boss);
-							if(boss.getHP() <= 0){ bossDead = true; p.addToEnemiesKilled(10);}
+							if(boss.getHP() <= 0 && bossDead == false){ bossDead = true; p.addToEnemiesKilled(10);}
 						}
 						lastPhysicsFrameMs += physicsDeltaMs;
 					} while (lastPhysicsFrameMs + physicsDeltaMs < curFrameMs);
@@ -447,24 +447,19 @@ public class JavaTemplate {
 		gl.glEnd();
 	}
 
-	public static AABB drawText(String s, GL2 gl, int x, int y, double size) {
-		int width = 0;
-		int height = (int) (font.get("A").ySize * size);
+	public static void drawText(String s, GL2 gl, int x, int y, double size) {
 		for (int i = 0; i < s.length(); i++) {
 			String key = s.substring(i, i + 1).toUpperCase();
 			if (key.equals(" ")) {
 				x += (int) (40 * size);
-				width += (int) (40 * size);
 			} else {
 				Letter l = font.get(key);
 				int trueXSize = (int) (l.xSize * size);
 				int trueYSize = (int) (l.ySize * size);
 				glDrawSprite(gl, l.texture, x, y, trueXSize, trueYSize);
 				x += trueXSize + 5;
-				width += trueXSize + 5;
 			}
 		}
-		return new AABB(x, y, width, height);
 	}
 	
 	public static Object deepClone(Object object) {

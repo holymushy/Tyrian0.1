@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-public class AABB implements Serializable {
+public abstract class AABB implements Serializable {
 	private static final long serialVersionUID = -9178618887261639360L;
 	private int x,y,w,h;
 	public AABB(int x, int y, int w, int h){
