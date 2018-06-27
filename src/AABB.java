@@ -68,5 +68,18 @@ public abstract class AABB implements Serializable {
 		if(this.getX() > maxX) this.setX(maxX);
 		if(this.getY() > maxY) this.setY(maxY);
 	}
+}
 
+abstract class AABBBuilder{
+	private int x, y, w, h;
+	public AABBBuilder() {}
+	public AABBBuilder setX(int x) {this.x = x; return this;}
+	public AABBBuilder setY(int y) {this.y = y; return this;}
+	public AABBBuilder setW(int w) {this.w = w; return this;}
+	public AABBBuilder setH(int h) {this.h = h; return this;}
+	public int getX() {return this.x;}
+	public int getY() {return this.y;}
+	public int getW() {return this.w;}
+	public int getH() {return this.h;}
+	public abstract Object build();
 }

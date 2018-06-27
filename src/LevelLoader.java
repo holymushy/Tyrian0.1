@@ -8,13 +8,13 @@ public class LevelLoader {
 		BackgroundDef bgDef = BackgroundLoader.loadLevel1BG(gl);
 		Camera camera = new Camera(0, bgDef.getH() * bgDef.getTileHeight() - 600, 800, 600);
 		AnimationLoader a = new AnimationLoader(gl);
-		Player p = new PlayerBuilder()
+		Player p = (Player) new PlayerBuilder()
+				.setHP(100)
+				.setAni(a.getPlayerAni("middle"))
 				.setX(camera.getX() + camera.getW()/2)
 				.setY(camera.getY() + camera.getH()/2)
 				.setW(a.getPlayerAni("middle").getCurrentImageSize()[0])
 				.setH(a.getPlayerAni("middle").getCurrentImageSize()[1])
-				.setAni(a.getPlayerAni("middle"))
-				.setHP(100)
 				.build();
 		
 		ArrayList<SpawnPoint> points = new ArrayList<SpawnPoint>();
@@ -34,25 +34,26 @@ public class LevelLoader {
 			AnimationData aa = a.getEnemyAni(ss.getEnemy());
 			if(ss.getEnemy().equals("carrot")){
 				for(int i =0; i<ss.getAmount(); i++){
-					ee.add(new SideSweeperBuilder()
+					ee.add((SideSweeper) new SideSweeperBuilder()
+							.setXDir(-3)
+							.setHP(10)
+							.setAni(aa)
 							.setX(camera.getW() + (i * (aa.getCurrentImageSize()[0] + 100)))
 							.setY(ss.getY() * bgDef.getTileHeight() - 10)
 							.setW(aa.getCurrentImageSize()[0])
 							.setH(aa.getCurrentImageSize()[1])
-							.setAni(aa)
-							.setHP(10)
-							.setXDir(-3)
 							.build());
 
 					//move in from the left
-					ee.add(new SideSweeperBuilder()
+					ee.add((SideSweeper) new SideSweeperBuilder()
+							.setXDir(3)
+							.setHP(10)
+							.setAni(aa)
 							.setX(0 - ((aa.getCurrentImageSize()[0] + 100) * i))
 							.setY(ss.getY() * bgDef.getTileHeight() - 100)
 							.setW(aa.getCurrentImageSize()[0])
 							.setH(aa.getCurrentImageSize()[1])
-							.setAni(aa)
-							.setHP(10)
-							.setXDir(3)
+							
 							.build());
 				}
 				points.add(new SpawnPoint(ss.getY()* bgDef.getTileHeight(), ee));
@@ -61,13 +62,13 @@ public class LevelLoader {
 				for(int i =0; i<ss.getAmount();i++){
 					int leftLimit = 0 + aa.getCurrentImageSize()[0];
 					int rightLimit = camera.getW() - aa.getCurrentImageSize()[0] * 10;
-					ee.add(new StationaryEnemyBuilder()
+					ee.add((StationaryEnemy) new StationaryEnemyBuilder()
+							.setHP(40)
+							.setAni(aa)
 							.setX(((rightLimit-leftLimit)/ss.getAmount() * (i+2)) + leftLimit)
 							.setY(ss.getY()*bgDef.getTileHeight()-aa.getCurrentImageSize()[1])
 							.setW(aa.getCurrentImageSize()[0])
 							.setH(aa.getCurrentImageSize()[1])
-							.setAni(aa)
-							.setHP(40)
 							.build());
 				}
 				points.add(new SpawnPoint(ss.getY() * bgDef.getTileHeight(), ee));
@@ -78,13 +79,13 @@ public class LevelLoader {
 		
 		AnimationData bossAni = a.getEnemyAni("bossN");
 		
-		Boss b = new BossBuilder()
+		Boss b = (Boss) new BossBuilder()
+				.setAniArr(new AnimationData[] {bossAni, a.getEnemyAni("bossG"),  a.getEnemyAni("bossA")})
+				.setHP(3000)
 				.setX(camera.getW()/2 - bossAni.getCurrentImageSize()[0]/2)
 				.setY(-bossAni.getCurrentImageSize()[1])
 				.setW(bossAni.getCurrentImageSize()[0])
 				.setH(bossAni.getCurrentImageSize()[1])
-				.setAni(new AnimationData[] {bossAni, a.getEnemyAni("bossG"),  a.getEnemyAni("bossA")})
-				.setHP(3000)
 				.build();
 		
 		return new Level(bgDef, p, camera, points, "level 1", b);

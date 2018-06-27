@@ -21,8 +21,8 @@ public class Boss extends Enemy {
 
 	//int x, int y, int w, int h, AnimationData[] ani, int hp
 	public Boss(BossBuilder b) {
-		super(b.getX(), b.getY(), b.getW(), b.getH(), b.getAni()[0], b.getHP());
-		this.animations = b.getAni();
+		super(b.getX(), b.getY(), b.getW(), b.getH(), b.getAniArr()[0], b.getHP());
+		this.animations = b.getAniArr();
 		phase1 = true;
 		phase2 = false;
 		phase3 = false;
@@ -208,21 +208,10 @@ public class Boss extends Enemy {
 	}
 }
 
-class BossBuilder{
-	private int x,y,w,h, hp;
+class BossBuilder extends DamagableDrawableAABBBuilder{
 	private AnimationData[] ani;
 	public BossBuilder() {}
-	public BossBuilder setX(int x) {this.x = x; return this;}
-	public BossBuilder setY(int y) {this.y = y; return this;}
-	public BossBuilder setW(int w) {this.w = w; return this;}
-	public BossBuilder setH(int h) {this.h = h; return this;}
-	public BossBuilder setHP(int hp) {this.hp = hp; return this;}
-	public BossBuilder setAni(AnimationData[] ani) {this.ani = ani; return this;}
-	public int getX() {return this.x;}
-	public int getY() {return this.y;}
-	public int getW() {return this.w;}
-	public int getH() {return this.h;}
-	public int getHP() {return this.hp;}
-	public AnimationData[] getAni() {return this.ani;}
+	public BossBuilder setAniArr(AnimationData[] ani) {this.ani = ani; return this;}
+	public AnimationData[] getAniArr() {return this.ani;}
 	public Boss build() {return new Boss(this);}
 }

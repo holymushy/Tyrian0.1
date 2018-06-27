@@ -18,3 +18,10 @@ public abstract class DrawableAABB extends AABB{
 		}
 	}
 }
+
+abstract class DrawableAABBBuilder extends AABBBuilder{
+	private AnimationData ani;
+	public DrawableAABBBuilder() {}
+	public DrawableAABBBuilder setAni(AnimationData ani) {this.ani = ani; return this;}
+	public AnimationData getAni() {return this.ani;}
+}

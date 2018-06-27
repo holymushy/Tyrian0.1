@@ -23,25 +23,12 @@ public class SideSweeper extends Enemy{
 	}
 }
 
-class SideSweeperBuilder{
+class SideSweeperBuilder extends DamagableDrawableAABBBuilder{
 	//int x, int y, int w, int h, AnimationData ani, int hp, int xDir
-	private int x, y, w, h, hp, xDir;
-	private AnimationData ani;
+	private int xDir;
 	public SideSweeperBuilder() {}
-	public SideSweeperBuilder setX(int x) {this.x = x; return this;}
-	public SideSweeperBuilder setY(int y) {this.y = y; return this;}
-	public SideSweeperBuilder setW(int w) {this.w = w; return this;}
-	public SideSweeperBuilder setH(int h) {this.h = h; return this;}
-	public SideSweeperBuilder setHP(int hp) {this.hp = hp; return this;}
 	public SideSweeperBuilder setXDir(int xDir) {this.xDir = xDir; return this;}
-	public SideSweeperBuilder setAni(AnimationData ani) {this.ani = ani; return this;}
-	public int getX() {return this.x;}
-	public int getY() {return this.y;}
-	public int getW() {return this.w;}
-	public int getH() {return this.h;}
-	public int getHP() {return this.hp;}
 	public int getXDir() {return this.xDir;}
-	public AnimationData getAni() {return this.ani;}
 	public SideSweeper build(){
 		return new SideSweeper(this);	
 	}

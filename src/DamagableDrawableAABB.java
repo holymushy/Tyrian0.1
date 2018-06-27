@@ -35,3 +35,10 @@ public abstract class DamagableDrawableAABB extends DrawableAABB{
 		}
 	}
 }
+
+abstract class DamagableDrawableAABBBuilder extends DrawableAABBBuilder{
+	private int hp;
+	public DamagableDrawableAABBBuilder() {}
+	public DamagableDrawableAABBBuilder setHP(int hp) {this.hp = hp; return this;}
+	public int getHP() {return this.hp;}
+}

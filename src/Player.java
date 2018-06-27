@@ -55,25 +55,9 @@ public class Player extends DamagableDrawableAABB implements Serializable{
 	
 }
 
-class PlayerBuilder{
-	//int x, int y, int w, int h, AnimationData ani, int hp
-	private int x, y, w, h, hp;
-	private AnimationData ani;
+class PlayerBuilder extends DamagableDrawableAABBBuilder{
 	public PlayerBuilder() {}
-	public PlayerBuilder setX(int x) {this.x = x; return this;}
-	public PlayerBuilder setY(int y) {this.y = y; return this;}
-	public PlayerBuilder setW(int w) {this.w = w; return this;}
-	public PlayerBuilder setH(int h) {this.h = h; return this;}
-	public PlayerBuilder setHP(int hp) {this.hp = hp; return this;}
-	public PlayerBuilder setAni(AnimationData ani) {this.ani = ani; return this;}
-	public int getX() {return this.x;}
-	public int getY() {return this.y;}
-	public int getW() {return this.w;}
-	public int getH() {return this.h;}
-	public int getHP() {return this.hp;}
-	public AnimationData getAni() {return this.ani;}
 	public Player build() {
 		return new Player(this);
 	}
-	
 }
