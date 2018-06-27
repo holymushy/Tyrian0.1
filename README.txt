@@ -1,5 +1,5 @@
 Game: Tyrian 0.1
-Runs on Windows 10 64-bit machines
+Runs on Windows 64-bit machines
 All the source code in in the src folder
 The other folders contain the game's resources
 jogl.jar is the runnable
