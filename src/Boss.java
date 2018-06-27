@@ -1,11 +1,10 @@
 import java.util.ArrayList;
 
 public class Boss extends Enemy {
+	private static final long serialVersionUID = -3743638164886441336L;
 	boolean phase1, phase2, phase3;
 	private AnimationData[] animations;
 	private Phase movePhase, shootPhase;
-	private final long DEFAULT_ROLL_TIME = 7000;
-	private long moveRollTime;
 	private final long DEFAULT_SHOOT_ROLL_TIME = 1000;
 	private long shootRollTime;
 	private final long DEFAULT_SHOOT_TIME_P1 = 500;
@@ -16,20 +15,19 @@ public class Boss extends Enemy {
 	private boolean activate;
 	private int oneThird;
 	private int twoThird;
-	private boolean canBeHurt;
 	enum Phase {
 		PHASE_R, PHASE_L, PHASE1_P, PHASE2_P, PHASE3_P;
 	}
 
-	public Boss(int x, int y, int w, int h, AnimationData[] ani, int hp) {
-		super(x, y, w, h, ani[0], hp);
-		this.animations = ani;
+	//int x, int y, int w, int h, AnimationData[] ani, int hp
+	public Boss(BossBuilder b) {
+		super(b.getX(), b.getY(), b.getW(), b.getH(), b.getAni()[0], b.getHP());
+		this.animations = b.getAni();
 		phase1 = true;
 		phase2 = false;
 		phase3 = false;
 		movePhase = Phase.PHASE_L;
 		shootPhase = Phase.PHASE1_P;
-		moveRollTime = DEFAULT_ROLL_TIME;
 		shootTime = DEFAULT_SHOOT_TIME_P1;
 		shootRollTime = DEFAULT_SHOOT_ROLL_TIME;
 		activate = false;
@@ -37,7 +35,7 @@ public class Boss extends Enemy {
 		twoThird = (this.getHP()/3) *2;
 	}
 
-	public ArrayList<Projectile> updateAI(int numFrames, long deltaTimeMS, ArrayList<Projectile> p, AnimationData[] a) {
+	public void updateAI(int numFrames, long deltaTimeMS, ArrayList<Projectile> p, AnimationData[] a) {
 		if (!activate) {
 			if(this.getY()== 0) 
 				activate = true;
@@ -48,9 +46,8 @@ public class Boss extends Enemy {
 		} 
 		else {
 			this.checkHP();
-			p = this.checkPhase(p, a, deltaTimeMS);
+			this.checkPhase(p, a, deltaTimeMS);
 		}
-		return p;
 	}
 
 	public void setPhase(boolean p1, boolean p2, boolean p3) {
@@ -63,29 +60,23 @@ public class Boss extends Enemy {
 		return new boolean[] { phase1, phase2, phase3 };
 	}
 
-	public ArrayList<Projectile> checkPhase(ArrayList<Projectile> p, AnimationData[] a, long deltaTimeMS) {
+	public void checkPhase(ArrayList<Projectile> p, AnimationData[] a, long deltaTimeMS) {
 		if (phase1)
-			p = phase1Actions(p, a, deltaTimeMS);
+			phase1Actions(p, a, deltaTimeMS);
 		else if (phase2)
-			p = phase2Actions(p, a, deltaTimeMS);
+			phase2Actions(p, a, deltaTimeMS);
 		else
-			p = phase3Actions(p, a, deltaTimeMS);
-		return p;
+			phase3Actions(p, a, deltaTimeMS);
 	}
 
-	public void moveCheck(long deltaTimeMS) {
-		moveRollTime -= deltaTimeMS;
-		if (moveRollTime <= 0) {
-			int num =0;
-			moveRollTime += DEFAULT_ROLL_TIME;
-			switch(this.movePhase){
-			case PHASE_L: num = 1; break;
-			case PHASE_R: num = 2; break;
-			default:
-				break;
-			}
-			if(num ==1) this.movePhase = Phase.PHASE_R;
-			else this.movePhase = Phase.PHASE_L;
+	public void moveCheck(long deltaTimeMS, Camera cam) {
+		if(this.getX() <= cam.getX()) {
+			this.setX(cam.getX());
+			this.movePhase = Phase.PHASE_R;
+		}
+		else if(this.getX() + this.getW() >= cam.getX() + cam.getW()) {
+			this.setX(cam.getX()+cam.getW()-this.getW());
+			this.movePhase = Phase.PHASE_L;
 		}
 		switch (this.movePhase) {
 		case PHASE_L:
@@ -101,7 +92,7 @@ public class Boss extends Enemy {
 		}
 	}
 
-	public ArrayList<Projectile> phase1Shoot(ArrayList<Projectile> p, AnimationData[] a, long deltaTimeMS) {
+	public void phase1Shoot(ArrayList<Projectile> p, AnimationData[] a, long deltaTimeMS) {
 		shootTime -= deltaTimeMS;
 		AnimationData aa = a[0];
 		if (shootTime <= 0) {
@@ -113,10 +104,9 @@ public class Boss extends Enemy {
 			p.add(new Projectile(this.getX() + this.getW() / 2, this.getY() + this.getH(), aa.getCurrentImageSize()[0],
 					aa.getCurrentImageSize()[1], aa, 2, 3, 10));
 		}
-		return p;
 	}
 
-	public ArrayList<Projectile> phase2Shoot(ArrayList<Projectile> p, AnimationData[] a, long deltaTimeMS) {
+	public void phase2Shoot(ArrayList<Projectile> p, AnimationData[] a, long deltaTimeMS) {
 		shootTime -= deltaTimeMS;
 		AnimationData aa = a[1];
 		if(shootTime <=0){
@@ -136,10 +126,9 @@ public class Boss extends Enemy {
 			p.add(new Projectile(this.getX() + this.getW() / 2, this.getY() + this.getH(), aa.getCurrentImageSize()[0],
 					aa.getCurrentImageSize()[1], aa, 1, 1, 20));
 		}
-		return p;
 	}
 
-	public ArrayList<Projectile> phase3Shoot(ArrayList<Projectile> p, AnimationData[] a, long deltaTimeMS) {
+	public void phase3Shoot(ArrayList<Projectile> p, AnimationData[] a, long deltaTimeMS) {
 		shootTime -= deltaTimeMS;
 		AnimationData aa = a[2];
 		if(shootTime <=0){
@@ -151,10 +140,9 @@ public class Boss extends Enemy {
 			p.add(new Projectile(this.getX() + this.getW() / 2 + aa.getCurrentImageSize()[0] + 10, this.getY() + this.getH(), aa.getCurrentImageSize()[0],
 					aa.getCurrentImageSize()[1], aa, 0, 3, 5));
 		}
-		return p;
 	}
 
-	public ArrayList<Projectile> shootCheck(ArrayList<Projectile> p, AnimationData[] a, long deltaTimeMS) {
+	public void shootCheck(ArrayList<Projectile> p, AnimationData[] a, long deltaTimeMS) {
 		shootRollTime -= deltaTimeMS;
 		if (shootRollTime <= 0) {
 			shootRollTime += DEFAULT_SHOOT_ROLL_TIME;
@@ -177,36 +165,29 @@ public class Boss extends Enemy {
 		}
 		switch (this.shootPhase) {
 		case PHASE1_P:
-			p = this.phase1Shoot(p, a, deltaTimeMS);
+			this.phase1Shoot(p, a, deltaTimeMS);
 			break;
 		case PHASE2_P:
-			p = this.phase2Shoot(p, a, deltaTimeMS);
+			this.phase2Shoot(p, a, deltaTimeMS);
 			break;
 		case PHASE3_P:
-			p = this.phase3Shoot(p, a, deltaTimeMS);
+			this.phase3Shoot(p, a, deltaTimeMS);
 			break;
 		default:
 			break;
 		}
-		return p;
 	}
 
-	public ArrayList<Projectile> phase1Actions(ArrayList<Projectile> p, AnimationData[] a, long deltaTimeMS) {
-		this.moveCheck(deltaTimeMS);
-		p = this.phase1Shoot(p, a, deltaTimeMS);
-		return p;
+	public void phase1Actions(ArrayList<Projectile> p, AnimationData[] a, long deltaTimeMS) {
+		this.phase1Shoot(p, a, deltaTimeMS);
 	}
 
-	public ArrayList<Projectile> phase2Actions(ArrayList<Projectile> p, AnimationData[] a, long deltaTimeMS) {
-		this.moveCheck(deltaTimeMS);
-		p = this.shootCheck(p, a, deltaTimeMS);
-		return p;
+	public void phase2Actions(ArrayList<Projectile> p, AnimationData[] a, long deltaTimeMS) {
+		this.shootCheck(p, a, deltaTimeMS);
 	}
 
-	public ArrayList<Projectile> phase3Actions(ArrayList<Projectile> p, AnimationData[] a, long deltaTimeMS) {
-		this.moveCheck(deltaTimeMS);
-		p = this.shootCheck(p, a, deltaTimeMS);
-		return p;
+	public void phase3Actions(ArrayList<Projectile> p, AnimationData[] a, long deltaTimeMS) {
+		this.shootCheck(p, a, deltaTimeMS);
 	}
 
 	public void checkHP() {
@@ -225,4 +206,23 @@ public class Boss extends Enemy {
 	public boolean activated(){
 		return this.activate;
 	}
+}
+
+class BossBuilder{
+	private int x,y,w,h, hp;
+	private AnimationData[] ani;
+	public BossBuilder() {}
+	public BossBuilder setX(int x) {this.x = x; return this;}
+	public BossBuilder setY(int y) {this.y = y; return this;}
+	public BossBuilder setW(int w) {this.w = w; return this;}
+	public BossBuilder setH(int h) {this.h = h; return this;}
+	public BossBuilder setHP(int hp) {this.hp = hp; return this;}
+	public BossBuilder setAni(AnimationData[] ani) {this.ani = ani; return this;}
+	public int getX() {return this.x;}
+	public int getY() {return this.y;}
+	public int getW() {return this.w;}
+	public int getH() {return this.h;}
+	public int getHP() {return this.hp;}
+	public AnimationData[] getAni() {return this.ani;}
+	public Boss build() {return new Boss(this);}
 }

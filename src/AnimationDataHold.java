@@ -1,5 +1,6 @@
 
 public class AnimationDataHold extends AnimationData{
+	private static final long serialVersionUID = -8657572974731787170L;
 	public AnimationDataHold(AnimationDef def){
 		super(def);
 	}

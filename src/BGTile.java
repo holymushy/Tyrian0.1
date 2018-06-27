@@ -1,6 +1,7 @@
 import java.io.Serializable;
 
 public class BGTile implements Serializable{
+	private static final long serialVersionUID = -8815261471290358151L;
 	private int tex;
 	private int[] size;
 	private boolean collidable;

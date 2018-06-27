@@ -1,6 +1,7 @@
 import java.io.Serializable;
 
 public class AnimationData implements Serializable{
+	private static final long serialVersionUID = -5889032181059379570L;
 	private AnimationDef def;
 	private int curFrame = 0;
 	private float secsUntilNextFrame;

@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import com.jogamp.opengl.GL2;
 
 public class Projectile extends DrawableAABB{
+	private static final long serialVersionUID = -1246509099711733721L;
 	private int xDir, yDir, dmg;
 	public Projectile(int x, int y, int w, int h, AnimationData ani, int xDir, int yDir, int dmg){
 		super(x,y,w,h,ani);

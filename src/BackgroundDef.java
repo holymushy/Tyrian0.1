@@ -3,6 +3,7 @@ import java.io.Serializable;
 import com.jogamp.opengl.GL2;
 
 public class BackgroundDef implements Serializable {
+	private static final long serialVersionUID = -2558482647373421089L;
 	private BGTile[] tiles;
 	private int w,h;
 	public BackgroundDef(int w, int h, BGTile[] tiles){

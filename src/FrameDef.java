@@ -1,6 +1,7 @@
 import java.io.Serializable;
 
 public class FrameDef implements Serializable{
+	private static final long serialVersionUID = 6912516297524497871L;
 	private int image;
 	private float frameTime;
 	private int[] size;

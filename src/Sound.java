@@ -1,6 +1,5 @@
 import javax.sound.sampled.*;
 import java.io.File;
-import java.util.concurrent.CountDownLatch;
 
 enum SoundLoader{
 	PEW("Sounds/laser pew.wav"),

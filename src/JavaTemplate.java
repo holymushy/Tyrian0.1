@@ -304,7 +304,7 @@ public class JavaTemplate {
 					} else
 						p.changeAnimation(a.getPlayerAni("middle"));
 					if (kbState[KeyEvent.VK_L]) {
-						playerProjectiles = p.shoot(playerProjectiles, a.getProjectileAni("player"));
+						p.shoot(playerProjectiles, a.getProjectileAni("player"));
 					}
 					if (kbState[KeyEvent.VK_ESCAPE] &&  !kbPrevState[KeyEvent.VK_ESCAPE]) {
 						levelName = "menu";
@@ -331,7 +331,7 @@ public class JavaTemplate {
 						}
 						else{
 							Enemy ee = enemies.get(i);
-							enemyProjectiles = ee.updateAI(numFrames,deltaTimeMS, enemyProjectiles, 
+							ee.updateAI(numFrames,deltaTimeMS, enemyProjectiles, 
 									new AnimationData[] {a.getProjectileAni("enemy")});
 							ee.draw(camera, gl, deltaTimeMS);
 						}
@@ -340,6 +340,7 @@ public class JavaTemplate {
 					ProjectileHandler.drawProjectiles(playerProjectiles, camera, gl, deltaTimeMS, cameraScrollSpeed);
 					ProjectileHandler.drawProjectiles(enemyProjectiles, camera, gl, deltaTimeMS, cameraScrollSpeed);
 					if(boss != null){
+						if(boss.activated()) boss.moveCheck(deltaTimeMS,camera);
 						boss.updateAI(numFrames, deltaTimeMS, enemyProjectiles, 
 								new AnimationData[] {a.getProjectileAni("enemy"), a.getProjectileAni("boss2"),
 										a.getProjectileAni("enemy")});

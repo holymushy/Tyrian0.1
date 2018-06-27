@@ -7,6 +7,7 @@ public class Level {
 	private ArrayList<SpawnPoint> spawns, oldSpawns;
 	private String name;
 	private Boss boss, oldBoss;
+	@SuppressWarnings("unchecked")
 	public Level(BackgroundDef bg, Player p, Camera camera, ArrayList<SpawnPoint> points, String name, Boss boss){
 		this.bg = bg;
 		this.p = p;
@@ -26,6 +27,7 @@ public class Level {
 	public Player getPlayer(){
 		return this.p;
 	}
+	@SuppressWarnings("unchecked")
 	public void reset(){
 		this.bg = this.oldBG;
 		this.p = this.oldP;

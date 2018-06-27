@@ -1,6 +1,7 @@
 import com.jogamp.opengl.GL2;
 
 public class DrawableAABB extends AABB{
+	private static final long serialVersionUID = 3616889993713688958L;
 	private AnimationData ani;
 	public DrawableAABB(int x, int y, int w, int h, AnimationData ani){
 		super(x,y,w,h);

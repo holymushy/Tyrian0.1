@@ -1,6 +1,7 @@
 import java.io.Serializable;
 
 public class AnimationDef implements Serializable{
+	private static final long serialVersionUID = 2302551783622123590L;
 	private FrameDef[] frames;
 
 	public AnimationDef(FrameDef[] frames) {
