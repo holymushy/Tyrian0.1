@@ -81,5 +81,5 @@ abstract class AABBBuilder{
 	public int getY() {return this.y;}
 	public int getW() {return this.w;}
 	public int getH() {return this.h;}
-	public abstract Object build();
+	public abstract AABB build();
 }
