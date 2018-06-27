@@ -1,5 +1,5 @@
 
-public class DamagableDrawableAABB extends DrawableAABB{
+public abstract class DamagableDrawableAABB extends DrawableAABB{
 	private static final long serialVersionUID = -3580073914587239753L;
 	private int hp;
 	public DamagableDrawableAABB(int x, int y, int w, int h, AnimationData ani, int hp){
